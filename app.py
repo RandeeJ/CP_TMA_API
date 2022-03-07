@@ -45,7 +45,7 @@ calculations_schema = CalculationSchema(many=True)
 #Endpoint to create a new guide
 @app.route('/calculation', methods=["POST"])
 #^anytime you want to create something in the database
-def add_guide():
+def add_calculation():
     valueOne = request.json['valueOne']
     # ^will get this object and then be able to parse it
     valueTwo = request.json['valueTwo']
@@ -62,6 +62,16 @@ def add_guide():
 
     return calculation_schema.jsonify(calculation)
 
+
+
+# Endpoint to query all calculations
+@app.route('/calculations', methods=["GET"])
+def get_calculations():
+    all_calculations = Calculation.query.all()
+    # ^will bring back all of the guides in the system
+    result = calculations_schema.dump(all_calculations)
+    return jsonify(result)
+    # video says result.data (in v3.0 no need to call data, dump already calls data)
 
 if __name__ == '__main__':
     app.run(debug=True)
