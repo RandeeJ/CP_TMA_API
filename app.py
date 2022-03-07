@@ -42,7 +42,10 @@ calculation_schema = CalculationSchema()
 calculations_schema = CalculationSchema(many=True)
 # ^a multiple guides schema
 
-#Endpoint to create a new guide
+
+
+
+#Endpoint to create a new calculation
 @app.route('/calculation', methods=["POST"])
 #^anytime you want to create something in the database
 def add_calculation():
@@ -64,6 +67,8 @@ def add_calculation():
 
 
 
+
+
 # Endpoint to query all calculations
 @app.route('/calculations', methods=["GET"])
 def get_calculations():
@@ -72,6 +77,18 @@ def get_calculations():
     result = calculations_schema.dump(all_calculations)
     return jsonify(result)
     # video says result.data (in v3.0 no need to call data, dump already calls data)
+
+
+
+
+
+# Endpoint for querying a single calculation
+@app.route("/calculation/<id>", methods=["GET"])
+def get_calculation(id):
+    #note that we pass in an argument here
+    calculation = Calculation.query.get(id)
+    return calculation_schema.jsonify(calculation)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
