@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import os
@@ -41,6 +41,26 @@ calculation_schema = CalculationSchema()
 # ^a single guide schema
 calculations_schema = CalculationSchema(many=True)
 # ^a multiple guides schema
+
+#Endpoint to create a new guide
+@app.route('/calculation', methods=["POST"])
+#^anytime you want to create something in the database
+def add_guide():
+    valueOne = request.json['valueOne']
+    # ^will get this object and then be able to parse it
+    valueTwo = request.json['valueTwo']
+    valueAnswer = request.json['valueAnswer']
+
+    new_calculation = Calculation(valueOne, valueTwo, valueAnswer)
+
+    db.session.add(new_calculation)
+    # ^creates a new database session and adds a new guide inside of it
+
+    db.session.commit()
+
+    calculation = Calculation.query.get(new_calculation.id)
+
+    return calculation_schema.jsonify(calculation)
 
 
 if __name__ == '__main__':
