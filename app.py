@@ -90,6 +90,28 @@ def get_calculation(id):
     return calculation_schema.jsonify(calculation)
 
 
+
+
+
+
+# Endpoint for updating a calculation
+@app.route("/calculation/<id>", methods=["PUT"])
+def calculation_update(id):
+    calculation = Calculation.query.get(id)
+    valueOne = request.json['valueOne']
+    valueTwo = request.json['valueTwo']
+    valueAnswer = request.json['valueAnswer']
+
+    calculation.valueOne = valueOne
+    calculation.valueTwo = valueTwo
+    calculation.valueAnswer = valueAnswer
+
+    db.session.commit()
+    return calculation_schema.jsonify(calculation)
+
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
     #
