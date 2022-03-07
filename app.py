@@ -112,6 +112,18 @@ def calculation_update(id):
 
 
 
+
+
+# Endpoint for deleting a calculation
+@app.route("/calculation/<id>", methods=["DELETE"])
+def calculation_delete(id):
+    calculation = Calculation.query.get(id)
+    db.session.delete(calculation)
+    db.session.commit()
+    return "Calculation was successfully deleted"
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
     #
