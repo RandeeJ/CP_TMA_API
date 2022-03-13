@@ -29,16 +29,18 @@ class Calculation(db.Model):
     valueOne = db.Column(db.Integer, unique=False)
     valueTwo = db.Column(db.Integer, unique=False)
     valueAnswer = db.Column(db.Integer, unique=False)
+    operation = db.Column(db.String, unique=False) #multiplicatin sum 
     # ^columns and data types
 
-    def __init__(self, valueOne, valueTwo, valueAnswer):
+    def __init__(self, valueOne, operation, valueTwo, valueAnswer):
         self.valueOne = valueOne
+        self.operation = operation
         self.valueTwo = valueTwo
         self.valueAnswer = valueAnswer
 
 class CalculationSchema(ma.Schema):
     class Meta:
-        fields = ('valueOne', 'valueTwo', 'valueAnswer')
+        fields = ('valueOne', 'operation', 'valueTwo', 'valueAnswer')
         # is there a way to add a column based on the operation button that was selected?
 
 calculation_schema = CalculationSchema()
@@ -55,10 +57,11 @@ calculations_schema = CalculationSchema(many=True)
 def add_calculation():
     valueOne = request.json['valueOne']
     # ^will get this object and then be able to parse it
+    operation = request.json['operation']
     valueTwo = request.json['valueTwo']
     valueAnswer = request.json['valueAnswer']
 
-    new_calculation = Calculation(valueOne, valueTwo, valueAnswer)
+    new_calculation = Calculation(valueOne, operation, valueTwo, valueAnswer)
 
     db.session.add(new_calculation)
     # ^creates a new database session and adds a new guide inside of it
@@ -103,10 +106,12 @@ def get_calculation(id):
 def calculation_update(id):
     calculation = Calculation.query.get(id)
     valueOne = request.json['valueOne']
+    operation = request.json['operation']
     valueTwo = request.json['valueTwo']
     valueAnswer = request.json['valueAnswer']
 
     calculation.valueOne = valueOne
+    calculation.operation = operation
     calculation.valueTwo = valueTwo
     calculation.valueAnswer = valueAnswer
 
