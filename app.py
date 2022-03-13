@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import os
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -19,6 +20,9 @@ db = SQLAlchemy(app)
 # ^gives us a programmatic way of interacting with the database
 ma = Marshmallow(app)
 # ^allows us to have schema --> stucture to the database
+
+CORS(app)
+
 
 class Calculation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
