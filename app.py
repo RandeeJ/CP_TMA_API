@@ -55,6 +55,7 @@ calculations_schema = CalculationSchema(many=True)
 @app.route('/calculation', methods=["POST"])
 #^anytime you want to create something in the database
 def add_calculation():
+    print(request.get_json())
     valueOne = request.json['valueOne']
     # ^will get this object and then be able to parse it
     operation = request.json['operation']
