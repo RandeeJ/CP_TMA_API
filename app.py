@@ -40,7 +40,7 @@ class Calculation(db.Model):
 
 class CalculationSchema(ma.Schema):
     class Meta:
-        fields = ('valueOne', 'operation', 'valueTwo', 'valueAnswer')
+        fields = ('id','valueOne', 'operation', 'valueTwo', 'valueAnswer')
         # is there a way to add a column based on the operation button that was selected?
 
 calculation_schema = CalculationSchema()
@@ -128,6 +128,8 @@ def calculation_update(id):
 @app.route("/calculation/<id>", methods=["DELETE"])
 def calculation_delete(id):
     calculation = Calculation.query.get(id)
+    print(calculation)
+    print(id)
     db.session.delete(calculation)
     db.session.commit()
     return "Calculation was successfully deleted"
