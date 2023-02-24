@@ -4,3 +4,8 @@ https://bottega.devcamp.com/pt-full-stack-development-javascript-python-react/gu
 https://dev.to/dev_elie/connecting-a-react-frontend-to-a-flask-backend-h1o
 
 https://www.youtube.com/watch?v=7LNl2JlZKHA&ab_channel=ArpanNeupane
+
+----------
+TO RUN: python3 app.py
+
+to install packages: pip3 <packagename>
